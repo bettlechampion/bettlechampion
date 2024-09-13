@@ -1,2 +1,2 @@
-distribute
+python==3.12
 django
