@@ -1,0 +1,19 @@
+.profile_boxs{
+  
+      margin-top: 12% !important;
+  }
+
+
+  .profile_boxs .tournament-card {
+
+    max-width: 219px !important;
+}
+  @media (max-width:1120px) {
+    .profile_boxs {
+      margin-top: 17% !important;
+  }
+  }@media (max-width: 600px) {
+    .profile_boxs {
+        margin-top: 23% !important;
+    }
+}

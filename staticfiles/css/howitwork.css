@@ -1,0 +1,90 @@
+/* How It Works Section */
+.how-it-works {
+  background-color: black;
+  padding: 60px 20px;
+  text-align: center;
+  color: #fff;
+}
+.how-it-works h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #00ffcc;
+  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+}
+
+.steps-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Step Container Styling */
+.step {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 250px;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+}
+
+.step:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 30px rgba(0, 255, 204, 0.6);
+}
+
+/* Step Icon Styling - Larger Images */
+.step-icon img {
+  width: 133px;
+  height: 133px;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+/* Text Below Each Step */
+.step h3 {
+  font-size: 1.4rem;
+  color: #00ffcc;
+  margin-bottom: 10px;
+}
+
+.step p {
+  font-size: 1rem;
+  color: #ddd;
+}
+
+/* Arrows Between Steps */
+.arrow {
+  font-size: 3rem;
+  color: #00ffcc;
+  margin: 0 10px;
+  flex-shrink: 0;
+  text-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+  .steps-container {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .arrow {
+    display: none; /* Hide arrows on mobile for better vertical stacking */
+  }
+
+  .step {
+    width: 100%; /* Allow steps to take full width on mobile */
+    max-width: 300px;
+  }
+
+  .step-icon img {
+    width: 155px;
+    height: 155px;
+}
+
+}

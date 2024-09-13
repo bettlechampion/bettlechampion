@@ -1,0 +1,63 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: black !important;
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+
+
+/* Footer */
+.footer {
+  background-color: #181818;
+  padding: 20px;
+  text-align: center;
+  color: #aaa;
+}
+
+.footer a {
+  color: #aaa;
+  margin: 0 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+  }
+
+  .features .feature-cards {
+    flex-direction: column;
+  }
+
+  .feature-card {
+    width: 100%;
+    max-width: 350px;
+    margin: 20px auto;
+  }
+}
+
+/* Animations */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
