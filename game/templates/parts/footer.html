@@ -1,0 +1,75 @@
+{% load static %} 
+{% load compress %}{% block css_file %}
+
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+{% endcompress css %}
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+/>
+{% endblock %}
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+        <div class="footer-columns">
+            <!-- Quick Links -->
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'turnaments' %}">Tournaments</a></li>
+                    <li><a href="{% url 'about-us' %}">About Us</a></li>
+                    <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Social Media -->
+            <div class="footer-column">
+                <h3>Social Media</h3>
+                <ul class="social-media">
+                    <li><a href="{{ social_links.facebook }}" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="{{ social_links.instagram }}" target="_blank"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="{{ social_links.twitter }}" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="{{ social_links.youtube }}" target="_blank"><i class="fab fa-youtube"></i> YouTube</a></li>
+                    <li><a href="{{ social_links.whatsapp }}" target="_blank"><i class="fab fa-whatsapp"></i> Whatsapp</a></li>
+                </ul>
+            </div>
+
+           <!-- Newsletter Signup -->
+           <div class="footer-column">
+            <h3>Newsletter Signup</h3>
+            <form class="newsletter-form" action="{% url 'newsletter_signup' %}" method="POST">
+                {% csrf_token %}
+                {{ newsletter_form.as_p }} <!-- Use the form from context processor -->
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+            <!-- Legal Links -->
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="{% url 'terms_conditon' %}">Terms & Condition</a></li>
+                    <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'cancellation' %}">Cancellation & Refund Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Payment Methods and Copyright -->
+        <div class="footer-bottom">
+            {% comment %} <div class="payment-icons">
+                <img src="visa.png" alt="Visa">
+                <img src="mastercard.png" alt="MasterCard">
+                <img src="paypal.png" alt="PayPal">
+                <img src="stripe.png" alt="Stripe">
+            </div> {% endcomment %}
+            <p>&copy; 2024 Bettle Champion. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+{% block js %}
+
+{% endblock %}

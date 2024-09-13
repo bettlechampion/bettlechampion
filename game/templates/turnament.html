@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load cache %}  
+{% load static  %}
+{% load compress %}
+{% block title %}
+Gaming Tournaments - Join Now
+{% endblock %}
+
+{% block css_file %}
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/turnament_page.css' %}">
+{% endcompress css %}
+<script src="{% static 'js/turnaments.js' %}"></script>
+
+{% endblock %}
+{% block content %}
+  <section class="tournament-page">
+    <h2>Upcoming Tournaments</h2>
+    
+    <div class="tournament-grid">
+      <!-- Loop through tournaments and make entire card a clickable link -->
+      {% for i in turnaments %}
+      <a href="{% url 'turnament_description' i.slug %}" class="tournament-card-link">
+        <div class="tournament-card">
+          <div class="tournament-image">
+              <!-- Display dynamic game image -->
+              <img src="{{ i.game_image.url }}" alt="{{ i.name }}">
+          </div>
+          <div class="tournament-content">
+              <h3>{{ i.name }}</h3>
+              <p>Starts: {{ i.datetime|date:"F d, Y" }}</p>
+              <p>Prize Pool: ₹{{ i.prize_pool }}</p>
+              <p class="entry-fee">Entry Fee: ₹{{ i.entry_fee }}</p>
+              <p class="seats">Remaining Seats: <span class="seats-count" data-seats="{{ i.reamaining_seats }}">{{ i.reamaining_seats }}</span></p>
+              <!-- Countdown Timer using dynamic start date -->
+              <div class="countdown" data-start="{{ i.datetime|date:"Y-m-d\TH:i:s" }}"></div>
+              
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+  
+      <!-- More tournament cards can be added in the same format -->
+    </div>
+  </section>
+  
+{% endblock %}

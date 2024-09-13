@@ -1,0 +1,136 @@
+
+{% extends "base.html" %}
+{% load static  %}
+
+{% load compress %}
+{% block title %}
+Gaming Tournament - Meet Local Players
+{% endblock %}
+
+{% block css_file %}
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/aboutus.css' %}">
+
+{% endcompress css %}
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+{% endblock %}
+
+
+{% block css %}
+<style>
+  .contact-hero {
+    position: relative;
+    height: 80vh;
+    background: url('{% static "images/aboutus/aboutback.webp" %}') no-repeat center center/cover; /* Replace with your image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    z-index: 1;
+  }
+  
+</style>
+{% endblock %}
+
+{% block content %}
+ 
+  
+<section class="contact-hero">
+  <div class="hero-content">
+    <h1>Welcome to Bettle Champion</h1>
+    <p>The Ultimate Destination for Gamers! At Bettle Champion, we’re redefining competitive gaming by creating an immersive, community-driven platform for gamers of all levels. Whether you’re a seasoned pro or just starting out, our tournaments offer the perfect opportunity to showcase your skills, win prizes, and connect with fellow players.</p>
+  </div>
+</section>
+
+<section class="about-mission">
+  <div class="mission-container">
+    <div class="mission-text" data-aos="fade-right">
+      <h2>Our Mission</h2>
+      <p>Our Mission: To bring together gamers from across the globe and create a competitive, yet inclusive space for tournaments that challenge, reward, and engage. We aim to empower gamers by providing fair, fun, and exciting competition while fostering a strong community of players.</p>
+    </div>
+    <div class="mission-image" data-aos="fade-left">
+      <img src= '{% static "images/aboutus/amisson.webp" %}'  alt="Mission Image">
+    </div>
+  </div>
+</section>
+
+<section class="about-what-we-do">
+  <div class="what-we-do-container">
+    <div class="what-we-do-text" data-aos="fade-up">
+      <h2>What We Do</h2>
+      <p>Bettle Champion hosts online gaming tournaments where players can compete in their favorite games, win cash prizes, and track their progress on global and local leaderboards. We offer both on-demand and scheduled tournaments, allowing gamers to play whenever they want and compete at their own pace. Our focus is on accessible gaming with low entry fees and a seamless user experience for players of all skill levels.</p>
+    </div>
+    <div class="what-we-do-image" data-aos="zoom-in">
+      <img src=  '{% static "images/aboutus/awhatwedo.webp" %}'   alt="What We Do Image">
+    </div>
+  </div>
+</section>
+
+<section class="about-core-values">
+  <h2 style="lign-items: center;
+  margin: auto;
+  justify-content: center;
+  display: flex;
+  margin: 4% auto;">Why Choose Bettle Champion?</h2>
+  <div class="core-values-grid" data-aos="fade-up">
+    <div class="value-item">
+      <h3 style="  color: #0ef; 
+">Fair Competition</h3>
+      <p>Our platform is designed to ensure a fair playing field for everyone, with skill-based matchmaking and strict anti-cheating measures.</p>
+    </div>
+    <div class="value-item">
+      <h3 style="  color: #0ef; /* Neon glow */
+/* Stronger glow */
+">Community-Centric</h3>
+      <p>We believe in the power of community. Through our platform, you can meet like-minded players, form teams, and compete in local or global tournaments.</p>
+    </div>
+    <div class="value-item">
+      <h3 style="  color: #0ef;
+">Accessible Tournaments</h3>
+      <p>We provide low-entry-fee tournaments with big rewards, giving every player a chance to shine.</p>
+    </div>
+    <div class="value-item">
+      <h3 style="  color: #0ef; ">Seamless Experience</h3>
+      <p>Built by gamers, for gamers, our platform is user-friendly and optimized for performance across devices.</p>
+    </div>
+  </div>
+</section>
+
+<section class="about-story">
+  <div class="story-container ">
+    <h2 data-aos="fade-up" style="  color: #0ef; /* Neon glow */
+    text-shadow: 0 0 25px rgba(0, 255, 255, 0.8); /* Stronger glow */
+    animation: glowText 1.5s ease-in-out infinite alternate;">Our Story</h2>
+    <p data-aos="fade-up">Bettle Champion was founded by passionate gamers who saw a gap in the competitive gaming world. We wanted to create a space where anyone could easily compete, regardless of their location or experience level. Our platform was designed with accessibility and community in mind, and we’ve quickly grown into a thriving ecosystem where players can connect, compete, and win.</p>
+    <div class="story-image" data-aos="fade-up">
+      <img src='{% static "images/aboutus/astory.webp" %}'   alt="Our Story">
+    </div>
+  </div>
+</section>
+
+<section class="about-vision">
+  <div class="vision-container" data-aos="fade-right">
+    <h2 style="  color: #0ef; /* Neon glow */
+    text-shadow: 0 0 25px rgba(0, 255, 255, 0.8); /* Stronger glow */
+    animation: glowText 1.5s ease-in-out infinite alternate;">Looking Ahead</h2>
+    <p>We’re just getting started. Our vision is to continue expanding globally, introducing new games and features, and building the largest, most inclusive competitive gaming platform in the world. We believe in giving back to the community, and as we grow, we’ll continue to support both casual gamers and aspiring pros through tournaments, rewards, and community events.</p>
+  </div>
+</section>
+
+<section class="about-contact">
+  <div class="contact-container" data-aos="fade-up">
+    <h2 style="  color: #0ef; /* Neon glow */
+    text-shadow: 0 0 25px rgba(0, 255, 255, 0.8); /* Stronger glow */
+    animation: glowText 1.5s ease-in-out infinite alternate;">Contact Us</h2>
+    <p>Have questions? Want to partner with us or learn more? Reach out at <a href="mailto:info@platformname.com">info@platformname.com</a>, and we’ll be happy to assist you.</p>
+  </div>
+</section>
+
+  {% include 'parts/faq.html' %}
+  {% include 'parts/sponsors.html' %}
+  
+
+  
+{% endblock %}

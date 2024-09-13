@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load cache %}
+{% load static %}
+{% load compress %}
+
+{% block title %}
+Gaming Tournaments - Join Now
+{% endblock %}
+
+{% block css_file %}
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+<link rel="stylesheet" href="{% static 'css/board.css' %}">
+{% endcompress %}
+
+<style>
+    .contact-hero {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.579)), url('{%  static "images/contact/contact.webp" %}');
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% cache 1440 contact %}
+<section class="contact-hero">
+    <div class="hero-content">
+      <h1>Contact Us</h1>
+      <p>We'd love to hear from you! Get in touch with us for any queries or support.</p>
+    </div>
+</section>
+
+<section class="contact-form-section">
+    <div class="form-container">
+        <h2>Get in Touch</h2>
+        <form class="contact-form" method="post">
+            {% csrf_token %}
+            {% if messages %}
+                <div class="message-box">
+                    {% for message in messages %}
+                        <p style="color: green; font-weight: bold;">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" name="message" rows="5" placeholder="Write your message" required></textarea>
+            </div>
+
+            <button type="submit" class="cta-button">Send Message</button>
+        </form>
+    </div>
+</section>
+
+{% endcache %}
+<!-- Cache the FAQ section for 24 hours since it rarely changes -->
+{% cache 1440 faq %}
+  {% include 'parts/faq.html' %}
+{% endcache %}
+
+<!-- Cache the Sponsors section for 24 hours as it’s unlikely to change often -->
+{% cache 1440 sponsors %}
+  {% include 'parts/sponsors.html' %}
+{% endcache %}
+
+{% endblock %}

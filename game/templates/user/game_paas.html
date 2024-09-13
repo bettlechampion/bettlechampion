@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load cache %}
+{% load compress %}
+{% block title %}
+Gaming Tournaments - Join Now
+{% endblock %}
+
+{% block css_file %}
+
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/game_paas.css' %}">
+
+{% endcompress  %}
+
+{% endblock %}
+
+{% block content %}
+
+
+<!-- Dropdown to select a game -->
+<section class="dropdown-container">
+  <label for="game-selector">Select a Game:</label>
+  <select id="game-selector">
+    {% for tournament in enrolled_tournaments %}
+      <option value="{{ tournament.slug }}">{{ tournament.name }}</option>
+    {% empty %}
+      <option value="" disabled>No enrolled games found</option>
+    {% endfor %}
+  </select>
+</section>
+
+<!-- Dynamic content for each enrolled tournament -->
+{% for tournament in enrolled_tournaments %}
+<section id="{{ tournament.slug }}" class="tournament-content">
+  <h1>{{ tournament.name }} Tournament Details</h1>
+  <p><strong>Date & Time:</strong> {{ tournament.datetime|date:"F d, Y, h:i A" }}</p>
+  <p><strong>Game:</strong> {{ tournament.name }}</p>
+  <p><strong>Entry Fee:</strong> ₹{{ tournament.entry_fee }} per player</p>
+  <p><strong>Prize Pool:</strong> ₹{{ tournament.prize_pool }}</p>
+  <p><strong>Game Pass:</strong> {{ tournament.game_paas }}</h2>
+  <ul>
+    <li>{{ tournament.game_rules }}</li>
+    <li>Join the custom game using the game pass .</li>
+  </ul>
+</section>
+{% endfor %}
+
+
+
+  {% cache 1440 faq_sponsor_report %}
+{% include 'parts/faq.html' %}
+{% include 'parts/sponsors.html' %}
+
+{% endcache %}
+<script >   
+  document.addEventListener("DOMContentLoaded", function() {
+    // Select the first option by default
+    const gameSelector = document.getElementById('game-selector');
+    const defaultGame = gameSelector.value;
+    
+    // Show the default game content when the page loads
+    document.getElementById(defaultGame).classList.add('active');
+    
+    // Add event listener for when the user changes the dropdown
+    gameSelector.addEventListener('change', function() {
+      // Hide all content sections
+      var contents = document.querySelectorAll('.tournament-content');
+      contents.forEach(function(content) {
+        content.classList.remove('active');
+      });
+
+      // Show the selected content
+      var selectedGame = this.value;
+      if (selectedGame) {
+        document.getElementById(selectedGame).classList.add('active');
+      }
+    });
+});
+
+    </script>
+{% endblock %}

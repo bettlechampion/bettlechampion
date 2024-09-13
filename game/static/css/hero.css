@@ -1,0 +1,92 @@
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 100vh;
+    background: url('./cta.webp') no-repeat center center/cover; /* Image related to gameplay or winners */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    /* margin-top: 5%; */
+  }
+  
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Dark overlay for visibility */
+    z-index: 1;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 20px;
+  }
+  
+  .hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    color: #00ffcc; /* Neon color to match the theme */
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* Neon glow */
+  }
+  
+  .hero p {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    color: #fff;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7); /* Text shadow */
+  }
+  
+  .hero button {
+    background-color: #213531;/* Neon cyan button */
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px #00ffcc, 0 0 30px #00ffcc; /* Neon glow for the button */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .hero button:hover {
+    background-color: #00cc99; /* Slight color change on hover */
+    box-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+  
+    .hero p {
+      font-size: 1.2rem;
+    }
+  
+    .hero button {
+      padding: 12px 25px;
+      font-size: 1rem;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 20px;
+      margin-top: 10%;
+  }
+  }
+  
+  @media (max-width: 500px) {
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 0 20px;
+        margin-top: 33%;
+    }
+}

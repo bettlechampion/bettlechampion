@@ -1,0 +1,83 @@
+
+{% extends "base.html" %}
+{% load static  %}
+
+{% load compress %}
+{% block title %}
+Gaming Tournament - Privacy Policy
+{% endblock %}
+
+{% block css_file %}
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/privacy.css' %}">
+{% endcompress css %}
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+{% endblock %}
+
+
+{% block css %}
+<style>
+   .privacy-boxs{
+
+    max-width: 90%;
+    margin: auto;margin-top: 12%;
+   }
+   @media (max-width:1000px) {
+    .privacy-boxs{
+    margin: auto;
+    margin-top: 20%;
+   }
+   }
+   @media (max-width: 600px) {
+    .privacy-boxs {
+        margin: auto;
+        margin-top: 35%;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<section  class="privacy-boxs">
+
+
+ 
+    <div class="privacy-container">
+        <h1>Cancellation & Refund Policy</h1>
+    
+        <section>
+            <h2>1. Entry Fee Refunds</h2>
+          
+            <p>
+              All entry fees paid for tournaments are non-refundable, except in cases where the tournament is canceled by <strong>Bettle Champion</strong> due to technical or operational issues. In such cases, full refunds will be provided within 7 business days.
+            </p>
+        </section>
+    
+        <section>
+            <h2>2. Tournament Cancellations</h2>
+            <p>If a tournament is canceled due to technical failures or unforeseen circumstances, we will issue a refund to all participants. You will receive a notification about the cancellation and details about the refund process.
+            </p>
+        </section>
+    
+        <section>
+            <h2>3. Player-Initiated Cancellations</h2>
+            <p>Players may cancel their participation in a tournament before the 48 hours of registration deadline, and in some cases, a refund may be issued depending on the tournament terms. Once the deadline has passed, no refunds will be provided.</p>
+        </section>
+    
+        <section>
+            <h2>4. Processing Refunds</h2>
+            <p>Refunds will be processed through the same payment method used for the original transaction. Please allow up to 7 business days for the refund to reflect in your account.</p>
+        </section>
+    
+        <section>
+            <h2>5. Disputes</h2>
+            <p>In the case of any disputes regarding payments or refunds, please contact our support team at [support email] within 24 hours of the issue.</p>
+        </section>    
+    </div>
+
+</section>
+
+  
+{% endblock %}

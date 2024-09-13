@@ -1,0 +1,21 @@
+{% load static %} 
+{% load compress %}{% block css_file %}
+
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/cta.css' %}">
+{% endcompress css %}
+{% endblock %}
+
+<section class="cta-section">
+    <div class="cta-content">
+      <h2>{{cta.title}}</h2>
+      <p>{{cta.description}}</p>
+      <button class="cta-button">Sign Up Now</button>
+    </div>
+    <div class="cta-image">
+      <img src="{{cta.image.url}}" alt="Gaming Image">
+    </div>
+  </section>
+
+{% block js %}
+{% endblock %}

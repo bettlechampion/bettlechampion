@@ -1,0 +1,68 @@
+
+
+{% extends "base.html" %}
+{% load static  %}
+{% load cache %}
+{% load compress %}
+{% block title %}
+Gaming Tournaments - Join Now
+{% endblock %}
+
+{% block css_file %}
+
+{% cache 1440 leader_css %}
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/leaderboard.css' %}">
+{% endcompress css %}
+
+{% endcache %}
+{% endblock %}
+{% block content %}
+
+
+{% cache 60 main_leaderboard %}
+<section class="leaderboard-section">
+  <h2>Recent Tournament Winners</h2>
+  <table class="leaderboard">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Username</th>
+        <th>Prize</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><a href="{% url 'user_report' leaderboard.first_place.username %}">{{ leaderboard.first_place.username }}</a></td>
+        <td>₹{{ leaderboard.first_prize }}</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><a href="{% url 'user_report' leaderboard.second_place.username %}">{{ leaderboard.second_place.username }}</a></td>
+        <td>₹{{ leaderboard.second_prize }}</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><a href="{% url 'user_report' leaderboard.third_place.username %}">{{ leaderboard.third_place.username }}</a></td>
+        <td>₹{{ leaderboard.third_prize }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Top 5 Players of the Month -->
+  <div class="top-players">
+    <h3>Top 3 Players of the Month</h3>
+    <ul>
+      <li><a href="{% url 'user_report' leaderboard.first_place.username %}">{{ leaderboard.first_place.username }}</a></li>
+      <li><a href="{% url 'user_report' leaderboard.second_place.username %}">{{ leaderboard.second_place.username }}</a></li>
+      <li><a href="{% url 'user_report' leaderboard.third_place.username %}">{{ leaderboard.third_place.username }}</a></li>
+    </ul>
+  </div>
+</section>
+
+
+{% endcache %}
+
+
+  {% endblock %}

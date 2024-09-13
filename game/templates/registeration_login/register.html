@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+
+{% block title %}
+Gaming Tournaments - Join Now
+{% endblock %}
+
+{% block css_file %}
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endcompress css %}
+<style>
+    .hero-section {
+    height: 60vh;
+    background: url("{% static 'images/login_register/signup.webp' %}") no-repeat center center;
+    background-position: center;
+    background-attachment: scroll;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Join the Ultimate Gaming Experience</h1>
+      <p>Compete in tournaments, meet fellow gamers, and win exciting prizes. Let's get started!</p>
+    </div>
+  </section>
+<section class="signup-hero">
+    <div class="signup-container">
+        <h1>Join Us & Compete</h1>
+        <p>Sign up now and start competing in tournaments!</p>
+
+        <!-- Display success or error messages -->
+        {% if messages %}
+            <div class="message-box">
+                {% for message in messages %}
+                    <p style="color:red;">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form class="signup-form" action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="fullname">Full Name <span>*</span></label>
+                <input type="text" id="fullname" name="fullname" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address <span>*</span></label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile Number <span>*</span></label>
+                <input type="tel" id="mobile" name="mobile" required>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username/Gamer Tag <span>*</span></label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password <span>*</span></label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city">
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" required> I agree to the <a href="#">terms and conditions</a>
+                </label>
+            </div>
+
+            <button type="submit" class="submit-btn">Sign Up</button>
+        </form>
+
+        <p class="login-link">Already have an account? <a href="{% url 'login_user' %}">Log in here</a></p>
+    </div>
+</section>
+{% include 'parts/faq.html' %}
+{% include 'parts/sponsors.html' %}
+{% endblock %}

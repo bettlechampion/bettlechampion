@@ -1,0 +1,184 @@
+
+{% extends "base.html" %}
+{% load static  %}
+
+{% load cache %}
+
+{% load compress %}
+{% block title %}
+Gaming Tournament - Meet Local Players
+{% endblock %}
+
+{% block css_file %}
+
+
+{% cache 1440 css %}
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/whyjoin.css' %}">
+<link rel="stylesheet" href="{% static 'css/hero.css' %}">
+<link rel="stylesheet" href="{% static 'css/howitwork.css' %}">
+<link rel="stylesheet" href="{% static 'css/key_feature.css' %}">
+<link rel="stylesheet" href="{% static 'css/leaderboard.css' %}">
+{% endcompress %}
+{% endcache %}
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+
+
+{% endblock %}
+
+
+{% block css %}
+<style>
+    .hero {
+      background: url({%  static 'images/heros/cta.webp' %}) no-repeat center center/cover; /* Image related to gameplay or winners */
+      }
+</style>
+{% endblock %}
+
+{% block content %}
+ 
+ <!-- Hero Section with Background Image -->
+ {% cache 1440 hero_home %}
+ <section class="hero">
+    <div class="hero-content">
+      <h1>Join Exciting Gaming Tournaments<br>  Win Big Play Anytime</h1>
+      <p>Low entry fees, instant matchmaking, real prizes.</p>
+
+      <button><a href="{% url 'turnaments' %}">Join Now</a></button>
+  
+    </div>
+  </section>
+  <!-- Features Section -->
+
+  <section class="features" id="features">
+    <h2>Why Join Us?</h2>
+    <div class="feature-cards">
+      {% for item in why_join_us_items %}
+      <div class="feature-card">
+        <img src="{{ item.image.url }}" alt="{{ item.title }}">
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.description }}</p>
+      </div>
+      {% endfor %}
+  </section>
+
+  <!-- How It Works Section -->
+<!-- How It Works Section -->
+<!-- How It Works Section -->
+<section class="how-it-works" id="how-it-works">
+  <h2>How It Works</h2>
+  <div class="steps-container">
+    <!-- Step 1: Register -->
+    <div class="step">
+      <div class="step-icon">
+        
+        <img src="{{how_work.step_1_image.url}}" alt="{{how_work.step_1 }}">
+      </div>
+      <h3>{{how_work.step_1}}</h3>
+      <p>{{how_work.step_1_description}}</p>
+    </div>
+
+    <div class="arrow">&#10132;</div> <!-- Unicode arrow symbol -->
+
+    <!-- Step 2: Join a Tournament -->
+    <div class="step">
+      <div class="step-icon">
+        <img src="{{how_work.step_2_image.url}}" alt="{{how_work.step_2 }}">
+      </div>
+      <h3>{{how_work.step_2 }}</h3>
+      <p>{{how_work.step_2_description}}</p>
+    </div>
+
+    <div class="arrow">&#10132;</div> <!-- Unicode arrow symbol -->
+
+    <!-- Step 3: Play & Win -->
+    <div class="step">
+      <div class="step-icon">
+        <img src="{{how_work.step_3_image.url}}" alt="{{how_work.step_3}">
+      </div>
+      <h3>{{how_work.step_3}}</h3>
+      <p>{{how_work.step_3_description}}</p>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- Key Features Section -->
+  <section class="key-features">
+    <h2>Key Features</h2>
+    <div class="feature-list">
+      <div class="key-feature">
+        <i class="fas fa-bolt"></i>
+        <h3>Instant Tournaments</h3>
+        <p>Join on-demand tournaments with immediate matchups.</p>
+      </div>
+      <div class="key-feature">
+        <i class="fas fa-coins"></i>
+        <h3>Low Entry Fees</h3>
+        <p>Compete for big rewards with low entry fees.</p>
+      </div>
+      <div class="key-feature">
+        <i class="fas fa-globe"></i>
+        <h3>Global Competitions</h3>
+        <p>Participate in local and international competitions.</p>
+      </div>
+    </div>
+  </section>
+ 
+  
+  
+  {% include 'parts/cta.html' %}
+   {% endcache %}
+   {% cache 60 leaderboard %}
+  <section class="leaderboard-section">
+    <h2>Recent Tournament Winners</h2>
+    
+    <!-- Leaderboard Table -->
+    <table class="leaderboard">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Username</th>
+          <th>Prize</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><a href="{% url 'user_report' leaderboard.first_place.username %}">{{ leaderboard.first_place.username }}</a></td>
+          <td>₹{{ leaderboard.first_prize }}</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><a href="{% url 'user_report' leaderboard.second_place.username %}">{{ leaderboard.second_place.username }}</a></td>
+          <td>₹{{ leaderboard.second_prize }}</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><a href="{% url 'user_report' leaderboard.third_place.username %}">{{ leaderboard.third_place.username }}</a></td>
+          <td>₹{{ leaderboard.third_prize }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Top 5 Players of the Month -->
+    <div class="top-players">
+      <h3>Top 3 Players of the Month</h3>
+      <ul>
+        <li><a href="{% url 'user_report' leaderboard.first_place.username %}">{{ leaderboard.first_place.username }}</a></li>
+        <li><a href="{% url 'user_report' leaderboard.second_place.username %}">{{ leaderboard.second_place.username }}</a></li>
+        <li><a href="{% url 'user_report' leaderboard.third_place.username %}">{{ leaderboard.third_place.username }}</a></li>
+      </ul>
+    </div>
+  </section>
+  {% endcache %}
+  {% cache 1440 faq_sponsor %}
+  {% include 'parts/faq.html' %}
+  {% include 'parts/sponsors.html' %}
+  {% endcache %}
+
+  
+{% endblock %}

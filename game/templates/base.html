@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+
+  {% load cache %}
+  {% load compress %}
+  <title>{% block title %}
+
+    {% endblock %}</title>
+
+  {% block meta_tags %}
+  {% endblock %}
+
+  {% compress css %}
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+  <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/whatsapp.css' %}">
+  {% endcompress %}
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  {% block css_file %}
+
+  {% endblock %}
+
+
+  {% block css %}
+
+  {% endblock %}
+
+<body>
+
+  <a href="{{ social_links.whatsapp }}" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <nav class="navbar">
+    <div class="navbar-brand"><a href="/">Bettle Champion</a></div>
+    <div class="navbar-links">
+      <a href="/">Home</a>
+      <a href="{% url 'turnaments' %}">Tournaments</a>
+      <a href="{% url 'leaderboard' %}">Leaderboard</a>
+      <a href="{% url 'contact' %}">Contact</a>
+      {% if user.is_authenticated %}
+      {% if user.profile_image %}
+      <!-- Show user's profile picture if it exists -->
+      <a href="{% url 'profile_update' %}" class="special_case" style="background: transparent;">
+        <img src="{{ user.profile_image.url }}" alt="User Avatar" class="user-avatar">
+      </a>
+      {% else %}
+      <!-- Default avatar if no profile image -->
+      <a href="{% url 'profile_update' %}" class="special_case" style="background: transparent;">
+        <img src="{% static 'images/avatar/user.png' %}" alt="Default Avatar" class="user-avatar">
+      </a>
+      {% endif %}
+      {% else %}
+      <!-- If the user is not authenticated, show Register link -->
+      <a href="{% url 'register' %}">Register</a>
+      {% endif %}
+
+      <div class="navbar-user">
+        <div class="user-avatar">
+        </div>
+      </div>
+    </div>
+    <div class="navbar-toggle" id="navbar-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+  {% block content %}
+  <!-- Content from child templates will go here -->
+  {% endblock %}
+  {% cache 1440 footer_cache %}
+  {% include 'parts/footer.html' %}
+{% endcache %}
+  <script>
+    // Toggle navbar for mobile with animation
+    const toggleButton = document.getElementById('navbar-toggle');
+    const navbarLinks = document.querySelector('.navbar-links');
+
+    toggleButton.addEventListener('click', () => {
+      navbarLinks.classList.toggle('active');
+      toggleButton.classList.toggle('active');
+    });
+
+    // Animation for features section
+    const featureCards = document.querySelectorAll('.feature-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    featureCards.forEach(card => {
+      observer.observe(card);
+    });
+  </script>
+  <script src="{% static 'js/index.js' %}"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- FontAwesome for social icons -->
+
+</body>
+
+</html>

@@ -1,0 +1,139 @@
+/* Footer Styles */
+footer {
+    background-color: #0a0a0a;
+    color: #fff;
+    padding: 50px 0;
+    font-family: Arial, sans-serif;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.footer-columns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 286px;
+}
+.footer-column h3 {
+    color: #0ef;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.footer-column ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+    color: #bbb;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+    color: #0ef;
+}
+
+/* Social Media Icons */
+.social-media li {
+    display: flex;
+    align-items: center;
+}
+
+.social-media li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-media li a i {
+    font-size: 1.2rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-media li a:hover i {
+    color: #0ef;
+    transform: translateY(-5px);
+}
+
+/* Newsletter Signup */
+.newsletter-form input {
+    width: 70%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.newsletter-form button {
+    padding: 10px 20px;
+    background-color: #00ffcc;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.newsletter-form button:hover {
+    background-color: #00e6b3;
+    transform: translateY(-5px);
+}
+
+/* Payment Methods and Copyright */
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    border-top: 1px solid #333;
+    padding-top: 20px;
+}
+
+.payment-icons img {
+    width: 50px;
+    margin: 0 10px;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.payment-icons img:hover {
+    filter: grayscale(0);
+}
+
+.footer-bottom p {
+    margin-top: 20px;
+    color: #bbb;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .footer-columns {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .newsletter-form input {
+        width: 100%;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: center;
+    }
+}

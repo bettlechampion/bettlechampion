@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load cache %}
+{% load compress %}
+{% block title %}
+Gaming Tournaments - Join Now
+{% endblock %}
+
+{% block css_file %}
+
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/turnament_page.css' %}">
+<link rel="stylesheet" href="{% static 'css/report.css' %}">
+
+{% endcompress  %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script>
+  // For profile picture upload functionality (Optional)
+  document.querySelector('.edit-btn').addEventListener('click', function () {
+    alert('Change Profile Picture functionality here.');
+  });
+</script>
+
+<style>
+    /* Add this to make the "How It Works" section icons bigger */
+    .tournament-card {
+      background-color: black;
+    }  
+    
+  .achievements-section .tournament-card {
+
+    max-width: 169px !important;
+  }
+
+ .achievements-section .tournament-image img {
+    border-radius: 8px !important;
+  }
+
+ .achievements-section .tournament-image {
+    padding: 13px !important;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+<!-- Player Overview Section -->
+<section class="player-overview">
+  <div class="player-info">
+    <!-- Display profile image or default avatar -->
+    {% if profile_user.profile_image %}
+      <img src="{{ profile_user.profile_image.url }}" alt="{{ profile_user.username }}'s Profile Picture" class="profile-pic">
+    {% else %}
+      <img src="{% static 'images/avatar/user.png' %}" alt="Default Profile Picture" class="profile-pic">
+    {% endif %}
+    <div class="player-details">
+      <h1>Username: <span class="gamer-tag">{{ profile_user.username }}</span></h1>
+      <p>Location: {{ profile_user.city|default:"Not specified" }}</p>
+      <p>Current Rank: <span class="rank">Diamond III</span></p> <!-- Replace with dynamic rank if available -->
+      <p>Total Tournaments Played: <span>{{ total_tournaments }}</span></p>
+      <p>Wins: <span>{{ total_wins }}</span> | Losses: <span>{{ total_losses }}</span></p>
+      
+      <p>Total Earnings: <span>₹{{ total_earnings }}</span></p>
+      {% comment %} <p>Average Placement: <span>3rd</span></p> {% endcomment %}
+       <!-- Add average placement logic if required -->
+      <!-- Social Handles Section -->
+      
+      <div class="social-handles">
+        {% if social_links.twitter %}
+          <a href="{{ social_links.twitter }}" target="_blank" class="social-icon">
+            <i class="fab fa-twitter"></i>
+          </a>
+        {% endif %}
+        {% if social_links.instagram %}
+          <a href="{{ social_links.instagram }}" target="_blank" class="social-icon">
+            <i class="fab fa-instagram"></i>
+          </a>
+        {% endif %}
+        {% if social_links.facebook %}
+          <a href="{{ social_links.facebook }}" target="_blank" class="social-icon">
+            <i class="fab fa-facebook"></i>
+          </a>
+        {% endif %}
+        {% if social_links.youtube %}
+          <a href="{{ social_links.youtube }}" target="_blank" class="social-icon">
+            <i class="fab fa-youtube"></i>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Tournament History Section -->
+<section class="tournament-page">
+  <h2>Tournaments Played</h2>
+  <div class="tournament-grid">
+    <!-- Loop through the user's tournament enrollments -->
+    {% if tournament_enrollments %}
+    {% for enrollment in tournament_enrollments %}
+    <a href="{% url 'turnament_description' enrollment.tournament.slug %}" class="tournament-card-link">
+      <div class="tournament-card">
+        <div class="tournament-image">
+          {% if enrollment.tournament.game_image %}
+            <img src="{{ enrollment.tournament.game_image.url }}" alt="{{ enrollment.tournament.name }}">
+          {% else %}
+            <img src="{% static 'images/default-tournament.png' %}" alt="Tournament Image">
+          {% endif %}
+        </div>
+        <div class="tournament-content">
+          <h3>{{ enrollment.tournament.name }}</h3>
+          <p>Starts: {{ enrollment.tournament.datetime|date:"F d, Y" }}</p>
+          <p>Prize Pool: ₹{{ enrollment.tournament.prize_pool }}</p>
+          <p class="entry-fee">Entry Fee: ₹{{ enrollment.tournament.entry_fee }}</p>
+          
+          <!-- Show placement (1st, 2nd, 3rd, or no placement) -->
+          <p class="placement">
+            Placement: 
+            {% if enrollment.placement == 1 %}
+              1st (Winner)
+            {% elif enrollment.placement == 2 %}
+              2nd (Runner-up)
+            {% elif enrollment.placement == 3 %}
+              3rd (Second Runner-up)
+            {% else %}
+              {{enrollment.placement}}
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+{% else %}
+<p>No badges earned yet.</p>
+    {% endif %}
+    
+   
+  </div>
+</section>
+
+
+
+
+
+  <!-- Achievements Section -->
+  <section class="achievements-section">
+    <h2>Achievements & Badges</h2>
+
+    <div class="tournament-grid">
+      {% for badge in badges %}
+      <div class="tournament-card">
+        <div class="tournament-image">
+          <img src="{{ badge.badge_image.url }}" alt="{{ badge.title }}">
+        </div>
+        <!-- <div class="tournament-content">
+            
+              {% if badge.status %}
+              <p class="entry-fee">{{ badge.title }}</p>
+              {% endif %}
+          </div> -->
+      </div>
+      {% empty %}
+      <p>No badges earned yet.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+
+
+
+
+
+
+  {% cache 1440 faq_sponsor_report %}
+{% include 'parts/faq.html' %}
+{% include 'parts/sponsors.html' %}
+
+{% endcache %}
+
+{% endblock %}

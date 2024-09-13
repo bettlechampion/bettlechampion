@@ -1,0 +1,24 @@
+{% load static %}
+
+{% load compress %}
+{% block css_file %}
+
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/sponsor.css' %}">
+{% endcompress css %}
+{% endblock %}
+<section class="partners-section">
+    <h2>Our Partners & Sponsors</h2>
+    
+    <div class="partners-grid">
+        {% for partner in partners %}
+            <div class="partner-item" style="background-color: black;">
+                <a >
+                    <img src="{{ partner.logo.url }}" alt="{{ partner.name }} Logo">
+                </a>
+            </div>
+        {% empty %}
+            <p>No partners available at the moment.</p>
+        {% endfor %}
+    </div>
+</section>

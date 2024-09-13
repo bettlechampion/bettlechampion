@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% block title %}
+Gaming Tournaments - Login
+{% endblock %}
+
+{% block css_file %}
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endcompress %}
+
+<style>
+  .error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Signup Form Section -->
+<section class="signup-hero">
+  <div class="signup-container">
+    <h1>Welcome Back, Gamer!</h1>
+    <p>Log in to access your account and start competing</p>
+
+    <!-- Show error messages -->
+    {% if messages %}
+    <div class="message-box">
+        {% for message in messages %}
+            <p class="error-message" style="color: red;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;">{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form class="signup-form" action="{% url 'login_user' %}" method="POST">
+      {% csrf_token %} 
+      <div class="form-group">
+        <label for="email">Email Address <span>*</span></label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password <span>*</span></label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <button type="submit" class="submit-btn">Login</button>
+    </form>
+
+    <p class="login-link">Don't have an account? <a href="{% url 'register' %}">Sign up here</a></p>
+  </div>
+</section>
+
+{% include 'parts/faq.html' %}
+{% include 'parts/sponsors.html' %}
+{% endblock %}

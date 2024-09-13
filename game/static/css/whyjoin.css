@@ -1,0 +1,73 @@
+/* Features Section */
+.features {
+    padding: 50px 20px;
+    text-align: center;
+  }
+  
+  .features h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #00ffcc; /* Neon cyan to match the navbar */
+    text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc;
+  }
+  
+  .features .feature-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .feature-card {
+    background-color: #151515; /* Dark background to match the theme */
+    padding: 20px;
+    border-radius: 15px;
+    width: 250px;
+    margin: 20px;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.3); /* Light neon glow */
+  }
+  
+  .feature-card.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.6); /* More glow on hover */
+    transition: all 0.3s ease;
+  }
+  
+  .feature-card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .feature-card h3 {
+    color: #00ffcc; /* Neon cyan for headings */
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .feature-card p {
+    font-size: 1rem;
+    color: #ddd;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .features .feature-cards {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .feature-card {
+      width: 100%;
+      max-width: 350px;
+      margin: 20px auto;
+    }
+  }
+  

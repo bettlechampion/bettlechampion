@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load compress %}
+{% block title %}
+Gaming Tournaments - Join Now
+{% endblock %}
+
+{% block css_file %}
+<link rel="stylesheet" href="{% static 'css/profileboxs.css' %}">
+<link rel="stylesheet" href="{% static 'css/turnament_page.css' %}">
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script>
+  // For profile picture upload functionality (Optional)
+  document.querySelector('.edit-btn').addEventListener('click', function () {
+    alert('Change Profile Picture functionality here.');
+  });
+
+
+</script>
+
+<style>
+  @media (max-width:430px) {
+    .tournament-grid {
+
+      margin-top: 21%;
+    }
+  }
+
+  .achievements-section .tournament-card {
+
+    max-width: 169px !important;
+  }
+
+ .achievements-section .tournament-image img {
+    border-radius: 8px !important;
+  }
+
+ .achievements-section .tournament-image {
+    padding: 13px !important;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="tournament-page profile_boxs">
+  <div class="tournament-grid">
+      <!-- Logout Card -->
+      <div class="tournament-card">
+          <div class="tournament-image"></div>
+          <div class="tournament-content">
+              <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+                  {% csrf_token %}
+                  <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer;">
+                      <h3>Logout <br> <i class="fas fa-sign-out-alt"></i></h3>
+                  </button>
+              </form>
+          </div>
+      </div>
+
+      <!-- Your Report Card -->
+      <div class="tournament-card">
+          <div class="tournament-image"></div>
+          <div class="tournament-content">
+              <!-- Link to the public report page -->
+              <a href="{% url 'user_report' username=user.username %}" style="text-decoration: none; color: inherit;">
+                  <h3>Your Report <i class="fas fa-user-circle"></i></h3>
+              </a>
+          </div>
+      </div>
+      <!-- Your Report Card -->
+      <div class="tournament-card">
+          <div class="tournament-image"></div>
+          <div class="tournament-content">
+              <!-- Link to the public report page -->
+              <a href="{% url 'game_paas' %}" style="text-decoration: none; color: inherit;">
+                  <h3>Game Paas <i class="fas fa-gamepad"></i></h3>
+              </a>
+          </div>
+      </div>
+  </div>
+</section>
+
+<div class="container">
+  <!-- Profile Section -->
+  <section class="profile-section">
+    <h2>Profile Information</h2>
+    <div class="profile-card">
+      <div class="profile-pic-container">
+        <!-- Display profile picture or default avatar -->
+        {% if user.profile_image %}
+        <img src="{{ user.profile_image.url }}" alt="Profile Picture" class="profile-pic">
+        {% else %}
+        <img src="{% static 'images/avatar/user.png' %}" alt="Default Profile Picture" class="profile-pic">
+        {% endif %}
+      </div>
+
+      <!-- User Profile Form -->
+      <div class="profile-info">
+        <form method="POST" enctype="multipart/form-data" action="{% url 'profile_update' %}">
+          <!-- Separate form for profile info -->
+          {% csrf_token %}
+
+          <!-- Profile Information -->
+          <label for="username">Username/Gamer Tag:</label>
+          <input type="text" id="username" name="username" value="{{ user.username }}">
+
+          <label for="fullname">Full Name:</label>
+          <input type="text" id="fullname" name="fullname" value="{{ user.fullname }}">
+
+          <label for="email">Email Address:</label>
+          <input type="email" id="email" name="email" value="{{ user.email }}">
+
+          <label for="mobile">Mobile Number:</label>
+          <input type="text" id="mobile" name="mobile" value="{{ user.mobile }}">
+
+          <label for="profile_image">Profile Picture:</label>
+          <input type="file" id="profile_image" name="profile_image">
+
+          <label for="city">City:</label>
+          <input type="text" id="city" name="city" value="{{user.city}}">
+
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" value="">
+
+          <button type="submit" class="update-btn">Update Profile</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Media Links Form -->
+  <section class="social-media-section">
+    <h2>Social Media Links</h2>
+    <div class="social-links">
+      <form method="POST" action="{% url 'social_links_update' %}">
+        {% csrf_token %}
+
+        <label for="facebook">Facebook:</label>
+        <input type="url" name="facebook" value="{{ social_links.facebook }}">
+
+        <label for="instagram">Instagram:</label>
+        <input type="url" name="instagram" value="{{ social_links.instagram }}">
+
+        <label for="twitter">Twitter:</label>
+        <input type="url" name="twitter" value="{{ social_links.twitter }}">
+
+        <label for="youtube">YouTube:</label>
+        <input type="url" name="youtube" value="{{ social_links.youtube }}">
+
+        <button type="submit" class="update-btn">Update Social Links</button>
+      </form>
+
+    </div>
+  </section>
+
+
+  <!-- Tournament List Section: Tournaments Played -->
+  <section class="tournament-page">
+    <h2>Tournaments Played</h2>
+
+    <div class="tournament-grid">
+      {% for enrollment in enrollments %}
+      <a href="{% url 'turnament_description' slug=enrollment.tournament.slug %}" class="tournament-card-link">
+        <div class="tournament-card">
+          <div class="tournament-image">
+            <img src="{{ enrollment.tournament.game_image.url }}" alt="{{ enrollment.tournament.name }}">
+          </div>
+          <div class="tournament-content">
+            <h3>{{ enrollment.tournament.name }}</h3>
+            <p>Starts: {{ enrollment.tournament.datetime|date:"F d, Y" }}</p>
+            <p>Prize Pool: ₹{{ enrollment.tournament.prize_pool }}</p>
+            <p class="entry-fee">Entry Fee: ₹{{ enrollment.tournament.entry_fee }}</p>
+
+            <!-- Check if the tournament has ended by comparing the tournament datetime with the current date -->
+            {% if enrollment.tournament.datetime <= now %}
+              <!-- Tournament has ended, show analysis -->
+              <p class="entry-fee">In Top 3: {{ enrollment.in_top_three|yesno:"Yes,No" }}</p>
+              <br>
+            {% else %}
+              <!-- Tournament has not ended yet, show a message -->
+              <p class="entry-fee">Analysis will be provided after the tournament ends.</p>
+            {% endif %}
+          </div>
+        </div>
+      </a>
+      {% empty %}
+      <p>No tournaments played yet.</p>
+      {% endfor %}
+    </div>
+</section>
+
+
+
+
+  <!-- Achievements Section: Badges -->
+  <section class="achievements-section">
+    <h2>Achievements & Badges</h2>
+
+    <div class="tournament-grid">
+      {% for badge in badges %}
+      <div class="tournament-card">
+        <div class="tournament-image">
+          <img src="{{ badge.badge_image.url }}" alt="{{ badge.title }}">
+        </div>
+        <!-- <div class="tournament-content">
+            
+              {% if badge.status %}
+              <p class="entry-fee">{{ badge.title }}</p>
+              {% endif %}
+          </div> -->
+      </div>
+      {% empty %}
+      <p>No badges earned yet.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Settings Section -->
+  <!-- <section class="settings-section">
+    <h2>Settings</h2>
+    <form>
+      <label>Privacy Settings:</label>
+      <select>
+        <option value="public">Public</option>
+        <option value="private">Private</option>
+      </select>
+
+    </form>
+    <form action="" method="get">
+
+      <label>Notification Preferences:</label>
+      <select>
+        <option value="all">All Notifications</option>
+        <option value="tournament">Tournament Updates Only</option>
+        <option value="none">None</option>
+      </select>
+
+    </form>
+    <form action="" method="get">
+
+      <label>Account Deactivation:</label>
+      <button class="deactivate-btn">Deactivate Account</button>
+    </form>
+  </section> -->
+
+
+
+  <!-- Support/Help Section -->
+  <section class="support-section">
+    <h2>Support</h2>
+    <p>Need help? <a href="#">Contact Support</a> or visit our <a href="#">FAQ</a> section.</p>
+  </section>
+
+</div>
+
+{% include 'parts/faq.html' %}
+{% include 'parts/sponsors.html' %}
+{% endblock %}
